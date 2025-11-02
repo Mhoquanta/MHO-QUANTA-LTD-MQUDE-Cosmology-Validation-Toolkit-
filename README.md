@@ -28,7 +28,7 @@ or is something **nudging it off course**?
 | `gut_desi_fit.py` | Fits MQUDE to **DESI BAO** — no dark energy |
 | `atlas_template.csv` | **150 days** of JPL Horizons data |
 | `compare_orbits.py` | O-C residuals vs. GR |
-| `streamlit_app.py` | **Live web demo** |
+| `app.py` | **Live web demo** |
 
 ---
 
