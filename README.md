@@ -36,3 +36,8 @@ or is something **nudging it off course**?
 
 ```bash
 python gut_desi_fit.py
+# MQUDE vs GR: Is 3I/ATLAS Being Pushed by Something Else?
+
+**LIVE DEMO** → [https://ergjkp7a8tvmothtxeeqby.streamlit.app](https://ergjkp7a8tvmothtxeeqby.streamlit.app)
+
+**One equation. One comet. One phone.**
