@@ -1,3 +1,0 @@
-import pandas as pd
-
-atlas = pd.read_csv('atlas_template.csv')
