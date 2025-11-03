@@ -41,3 +41,8 @@ python gut_desi_fit.py
 **LIVE DEMO** → [https://ergjkp7a8tvmothtxeeqby.streamlit.app](https://ergjkp7a8tvmothtxeeqby.streamlit.app)
 
 **One equation. One comet. One phone.**
+### First Light (Public Data)
+- [First_Light_Telemetry_trimmed.csv](First_Light_Telemetry_trimmed.csv)
+- ![Range vs Time](fig1_range_vs_time.png)
+- ![ΔR from Start](fig2_deltaR.png)
+- ![Residual Drift (α=0)](fig3_gr_vs_mqude.png)
