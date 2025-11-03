@@ -46,3 +46,6 @@ python gut_desi_fit.py
 - ![Range vs Time](fig1_range_vs_time.png)
 - ![ΔR from Start](fig2_deltaR.png)
 - ![Residual Drift (α=0)](fig3_gr_vs_mqude.png)
+**Phase II (α = 2×10⁻⁹)** — Quantum resonance term active.  
+Expected cumulative divergence ≈ 10 km by Mar 2026.  
+[Phase II Telemetry CSV](2025-11-03T11-05_export-1.csv)
