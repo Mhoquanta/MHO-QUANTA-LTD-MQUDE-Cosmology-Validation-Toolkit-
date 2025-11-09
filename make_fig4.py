@@ -49,3 +49,6 @@ plt.legend(facecolor="#1b1f2a", edgecolor="#445", labelcolor="#ddd")
 plt.tight_layout()
 plt.savefig(FIG_PATH, bbox_inches="tight")
 print(f"Saved {FIG_PATH}")
+if __name__ == "__main__":
+    print("Running Phase II plot generation…")
+    exec(open("make_fig4.py").read())
