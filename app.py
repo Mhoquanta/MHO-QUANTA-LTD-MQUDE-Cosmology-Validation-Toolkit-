@@ -43,6 +43,86 @@ if uploaded:
     st.subheader("Summary")
     st.write(f"Mean MQUDE drift amplification: {data['MQUDE_drift'].iloc[-1]/data['GR_drift'].iloc[-1]:.6f}×")
     st.dataframe(data.head())
+# --- MQUDE vs GR: Fig.4 Divergence (meters) ---
+import io
+import numpy as np
+import matplotlib.pyplot as plt
 
+st.subheader("Fig. 4 — MQUDE – GR divergence (meters)")
+
+# Try to find a DataFrame from your upload step; adapt variable names if needed
+# Replace `df` below with your app's actual dataframe variable if different
+try:
+    df_plot = df.copy()
+except NameError:
+    df_plot = None
+
+if df_plot is None:
+    st.info("Upload CSV first to enable the divergence plot.")
+else:
+    # Be robust to different column sets
+    # We need a timestamp column and two drift columns (km) to compute residual in meters.
+    # Your exports typically have: datetime_iso, GR_drift, MQUDE_drift
+    if "datetime_iso" not in df_plot.columns:
+        st.error("CSV needs a 'datetime_iso' column.")
+    else:
+        # Ensure datetime & sorting
+        df_plot["t"] = pd.to_datetime(df_plot["datetime_iso"])
+        df_plot = df_plot.sort_values("t")
+
+        # If the app did not output GR/MQUDE drift columns (e.g., α=0 baseline),
+        # create them as zeros to keep the plot logic working.
+        if "GR_drift" not in df_plot.columns:
+            df_plot["GR_drift"] = 0.0
+        if "MQUDE_drift" not in df_plot.columns:
+            df_plot["MQUDE_drift"] = 0.0
+
+        # Residual (meters)
+        df_plot["residual_m"] = (df_plot["MQUDE_drift"] - df_plot["GR_drift"]) * 1000.0
+
+        # Time in days from first sample
+        t0 = df_plot["t"].iloc[0]
+        days = (df_plot["t"] - t0).dt.total_seconds() / 86400.0
+        y = df_plot["residual_m"].values
+
+        # Linear trend fit y ≈ slope * days + intercept
+        if len(df_plot) >= 2 and np.isfinite(y).all():
+            slope, intercept = np.polyfit(days, y, 1)
+            trend = slope * days + intercept
+        else:
+            slope, intercept = 0.0, float(y[0] if len(y) else 0.0)
+            trend = np.full_like(days, intercept)
+
+        # Project to 2026-03-01 just for a headline number
+        proj_target = pd.to_datetime("2026-03-01")
+        proj_days = (proj_target - t0).total_seconds() / 86400.0
+        proj_m = slope * proj_days + intercept
+        proj_km = proj_m / 1000.0
+
+        # Plot
+        fig, ax = plt.subplots(figsize=(10, 4.5), dpi=150)
+        ax.plot(df_plot["t"], y, "o-", linewidth=2.0, label="Residual (MQUDE − GR)")
+        ax.plot(df_plot["t"], trend, "--", linewidth=2.0, label=f"Trend ≈ {slope:.2f} m/day")
+        ax.set_title("MQUDE − GR residual (meters)")
+        ax.set_xlabel("Date")
+        ax.set_ylabel("Residual (m)")
+        ax.grid(True, linestyle="--", alpha=0.4)
+        ax.legend()
+
+        st.pyplot(fig, clear_figure=True)
+
+        # Also provide a download button for the PNG
+        buf = io.BytesIO()
+        fig.savefig(buf, format="png", bbox_inches="tight")
+        buf.seek(0)
+        st.download_button(
+            "Download Fig. 4 (PNG)",
+            data=buf,
+            file_name="fig4_phaseII_divergence.png",
+            mime="image/png"
+        )
+
+        # Show the headline projection number
+        st.caption(f"Projected residual by 2026-03-01 ≈ **{proj_km:,.2f} km** (from linear trend).")
 else:
     st.info("Upload your `atlas_template.csv` to begin.")
