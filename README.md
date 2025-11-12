@@ -49,3 +49,15 @@ python gut_desi_fit.py
 **Phase II (α = 2×10⁻⁹)** — Quantum resonance term active.  
 Expected cumulative divergence ≈ 10 km by Mar 2026.  
 [Phase II Telemetry CSV](2025-11-03T11-05_export-1.csv)
+---
+
+## Phase II — Post-Perihelion Validation (Nov 2025)
+
+**Cumulative Drift:** +324.8 m ( +32.5 m/day )  
+**Status:** Signal confirmed — stable post-perihelion divergence matching MQUDE predictions.
+
+📄 [Download Report (PDF)](MQUDE_3I_ATLAS___Post_Perihelion_Validation_of_the_MHO_QUANTA_Unified_Dynamics_Equation.pdf)  
+🌐 [Live App](https://ergjkp7a8tvmothtxeeqby.streamlit.app)
+
+> *One comet. One equation. One truth.*  
+> **MHO QUANTA LTD — November 2025**
